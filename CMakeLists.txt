@@ -8,6 +8,7 @@ link_directories(/opt/homebrew/lib)
 
 find_library(PCAP_LIBRARY pcap REQUIRED)
 
-add_executable(sniffer main.cpp)
+add_executable(sniffer main.cpp
+        netdev_lookup.h)
 
 target_link_libraries(sniffer ${PCAP_LIBRARY})

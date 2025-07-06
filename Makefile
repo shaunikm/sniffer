@@ -3,4 +3,4 @@
 .DEFAULT: build
 
 build:
-	gcc main.cpp -o main -lpcap
+	g++ main.cpp -o main -lpcap

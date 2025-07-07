@@ -39,6 +39,6 @@ DeviceMapping match_iface_pcap(pcap_if_t* iface) {
 
     DeviceMapping dev;
     dev.iface = iface;
-    dev.description = (it != dev_desc.end() ? it->second : "(No description)");
+    dev.description = (it != dev_desc.end() ? it->second : "No description");
     return dev;
 }

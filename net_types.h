@@ -85,5 +85,3 @@ constexpr std::uint8_t TH_FLAGS = TH_FIN | TH_SYN | TH_RST | TH_ACK | TH_URG | T
 inline std::uint8_t TH_OFF(const tcp_header* tcp) {
     return (tcp->th_offx2 & 0xF0) >> 4;
 }
-
-void print_payload_hex(const std::uint8_t* payload, std::size_t len);

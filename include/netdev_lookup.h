@@ -6,7 +6,16 @@
 
 #include <string>
 #include <map>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <pcap/pcap.h>
+
+#ifdef __cplusplus
+}
+#endif
 
 struct DeviceMapping {
     pcap_if_t* iface{};

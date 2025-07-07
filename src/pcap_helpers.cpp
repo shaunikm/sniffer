@@ -6,6 +6,7 @@
 #include "state.h"
 #include "util.h"
 #include "rendering.h"
+#include "net_types.h"
 
 void open_device(const std::size_t idx) {
     if (gHandle) {

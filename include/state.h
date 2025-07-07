@@ -4,11 +4,19 @@
 
 #pragma once
 
-#include "net_types.h"
 #include "netdev_lookup.h"
-#include <pcap/pcap.h>
 #include <vector>
 #include <atomic>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#include <pcap/pcap.h>
+
+#ifdef __cplusplus
+}
+#endif
 
 struct Row {
     std::string               ts;

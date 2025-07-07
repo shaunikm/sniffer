@@ -6,9 +6,9 @@
 
 #include <ncurses.h>
 
-static WINDOW* wStats    = nullptr;
-static WINDOW* wTable    = nullptr;
-static WINDOW* wHex      = nullptr;
+extern WINDOW* wStats;
+extern WINDOW* wTable;
+extern WINDOW* wHex;
 
 constexpr int  MAX_ROWS      = 1'000;
 constexpr auto DISPATCH_BULK = 64;

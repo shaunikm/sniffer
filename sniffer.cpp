@@ -125,14 +125,7 @@ int main() {
     nodelay(stdscr, TRUE);
 
     int H, W; getmaxyx(stdscr, H, W);
-    constexpr int stats_h = 3;
-    const int hex_h   = H / 3;
-    const int table_h = H - stats_h - hex_h;
-
-    wStats = newwin(stats_h, W, 0, 0);
-    wTable = newwin(table_h, W, stats_h, 0);
-    wHex   = newwin(hex_h,   W, stats_h + table_h, 0);
-    keypad(wTable, TRUE);
+    init_windows(H, W);
 
     open_device(gCurDev);
 

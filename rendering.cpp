@@ -6,6 +6,22 @@
 #include "state.h"
 #include "util.h"
 
+#include <ncurses.h>
+
+WINDOW* wStats = nullptr;
+WINDOW* wTable = nullptr;
+WINDOW* wHex   = nullptr;
+
+void init_windows(int H, int W) {
+    constexpr int stats_h = 3;
+    const int hex_h   = H / 3;
+    const int table_h = H - stats_h - hex_h;
+
+    wStats = newwin(stats_h, W, 0, 0);
+    wTable = newwin(table_h, W, stats_h, 0);
+    wHex   = newwin(hex_h,   W, stats_h + table_h, 0);
+    keypad(wTable, TRUE);
+}
 void draw_stats() {
     werase(wStats);
     box(wStats, 0, 0);

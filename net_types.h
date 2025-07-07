@@ -5,6 +5,7 @@
 #pragma once
 
 #include <cstdint>
+#include <cstdio>
 
 #ifdef __cplusplus
 extern "C" {
@@ -16,14 +17,16 @@ extern "C" {
 }
 #endif
 
-constexpr size_t ETHER_ADDR_LEN = 6;
 constexpr int PROMISCUOUS_MODE = 1;
+
+constexpr std::size_t ETHERNET_ADDR_LEN  = 6;
+constexpr std::size_t SIZE_ETHERNET      = 14;
 
 #pragma pack(push, 1)
 
 struct ethernet_header {
-    std::uint8_t    dst_mac[ETHER_ADDR_LEN];
-    std::uint8_t    src_mac[ETHER_ADDR_LEN];
+    std::uint8_t    dst_mac[ETHERNET_ADDR_LEN];
+    std::uint8_t    src_mac[ETHERNET_ADDR_LEN];
     std::uint16_t   ether_type;
 };
 
@@ -82,3 +85,5 @@ constexpr std::uint8_t TH_FLAGS = TH_FIN | TH_SYN | TH_RST | TH_ACK | TH_URG | T
 inline std::uint8_t TH_OFF(const tcp_header* tcp) {
     return (tcp->th_offx2 & 0xF0) >> 4;
 }
+
+void print_payload_hex(const std::uint8_t* payload, std::size_t len);

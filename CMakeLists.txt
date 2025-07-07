@@ -10,6 +10,8 @@ find_library(PCAP_LIBRARY pcap REQUIRED)
 
 add_executable(sniffer main.cpp
         netdev_lookup.cpp
-        netdev_lookup.h)
+        netdev_lookup.h
+        net_types.cpp
+        net_types.h)
 
 target_link_libraries(sniffer ${PCAP_LIBRARY})

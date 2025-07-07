@@ -2,8 +2,7 @@
 // Created by Shaunik Musukula on 7/6/25.
 //
 
-#ifndef NETDEV_LOOKUP_H
-#define NETDEV_LOOKUP_H
+#pragma once
 
 #include <string>
 #include <map>
@@ -15,5 +14,3 @@ struct DeviceMapping {
 };
 
 DeviceMapping match_iface_pcap(pcap_if_t* iface);
-
-#endif //NETDEV_LOOKUP_H

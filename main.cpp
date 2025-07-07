@@ -1,4 +1,5 @@
 #include "netdev_lookup.h"
+#include "net_types.h"
 
 #include <iostream>
 #include <map>
@@ -7,15 +8,13 @@ extern "C" {
     #include <pcap/pcap.h>
 }
 
-constexpr int PROMISCUOUS_MODE = 1;
-
 void throw_error(const char* msg) {
     std::cerr << msg << std::endl;
     exit(EXIT_FAILURE);
 }
 
-void get_devices(pcap_if_t** iface, char* errbuf) {
-    if (pcap_findalldevs(iface, errbuf) == -1) {
+void def_device(pcap_if_t** iface, char* errbuf) {
+    if (pcap_findalldevs(iface, errbuf) == PCAP_ERROR) {
         std::cerr << "Interface not found:" << std::endl;
         throw_error(errbuf);
     }
@@ -36,16 +35,34 @@ int main() {
     pcap_if_t* iface = nullptr;
     pcap_t* handle = nullptr;
     DeviceMapping dev{};
+    bpf_u_int32 mask;
+    bpf_u_int32 net;
+    pcap_pkthdr header{};
 
-    get_devices(&iface, errbuf);
+    def_device(&iface, errbuf);
     dev = match_iface_pcap(iface);
 
     handle = open_device(&dev, errbuf);
 
     if (pcap_datalink(handle) != DLT_EN10MB) {
-        std::cerr << "Device " << dev.iface->name << " doesn't provide Ethernet headers - not supported" << std::endl;
-        return(2);
+        std::cerr << "Device " << dev.iface->name << " doesn't provide Ethernet headers - not supported\n";
+        return 1;
     }
+
+    if (pcap_lookupnet(dev.iface->name, &net, &mask, errbuf) == PCAP_ERROR) {
+        fprintf(stderr, "Couldn't get netmask for device %s: %s\n", dev.iface->name, errbuf);
+        net = 0;
+        mask = 0;
+    }
+
+    handle = pcap_open_live(dev.iface->name, BUFSIZ, PROMISCUOUS_MODE, 1000, errbuf);
+    if (handle == nullptr) {
+        fprintf(stderr, "Couldn't open device %s: %s\n", dev.iface->name, errbuf);
+        return 1;
+    }
+
+    const std::uint8_t *packet = pcap_next(handle, &header);
+    std::cout << "Jacked a packet with length of [" << header.caplen << "] [" << header.len << "]\n";
 
     pcap_freealldevs(iface);
     pcap_close(handle);

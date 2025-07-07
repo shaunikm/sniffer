@@ -28,7 +28,8 @@ sudo ./sniffer
 
 ```
 'up/down key' - selec packet
-'c' - set a specific capture window (by packets, bytes, or a time interval). this will save captures packets to a .pcap file in the directory the executable is ran.
+'c' - set a specific capture window (by packets, bytes, or a time interval).
+    - this will save captured packets to a .pcap file in the directory the executable is ran.
 'h' - dump hex data of selected packet
 'd' - select network interface to monitor
 ```

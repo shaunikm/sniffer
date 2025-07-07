@@ -13,6 +13,14 @@ add_executable(sniffer sniffer.cpp
         netdev_lookup.cpp
         netdev_lookup.h
         net_types.cpp
-        net_types.h)
+        net_types.h
+        state.cpp
+        state.h
+        rendering.cpp
+        rendering.h
+        util.cpp
+        util.h
+        pcap_helpers.cpp
+        pcap_helpers.h)
 
 target_link_libraries(sniffer ${PCAP_LIBRARY} ${NCURSES_LIBRARY})
